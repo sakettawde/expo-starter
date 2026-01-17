@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(expo-app-design:building-ui)",
+      "Bash(npm run lint)",
+      "Bash(npx expo doctor)",
+      "Bash(npx tsc:*)"
+    ]
+  }
+}
