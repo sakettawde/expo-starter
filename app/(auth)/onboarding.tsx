@@ -69,7 +69,7 @@ export default function OnboardingScreen() {
 
   const handleComplete = () => {
     completeOnboarding();
-    router.replace('/(auth)/login');
+    router.replace('/');
   };
 
   const isLastSlide = currentIndex === slides.length - 1;

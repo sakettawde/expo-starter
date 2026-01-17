@@ -35,17 +35,17 @@ export default function LoginScreen() {
 
     setError('');
     signIn(email, password);
-    router.replace('/(app)');
+    router.replace('/');
   };
 
   const handleDemoSignIn = () => {
     signIn('demo@intuition.app', 'demo');
-    router.replace('/(app)');
+    router.replace('/');
   };
 
   return (
     <KeyboardAvoidingView
-      style={styles.keyboardView}
+      style={[styles.keyboardView, { backgroundColor: colors.background }]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <ScrollView

@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
 import { Alert } from 'react-native';
-import { Stack, router } from 'expo-router';
+import { Stack } from 'expo-router';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { getColors, ColorScheme } from '@/constants/colors';
 import { Avatar } from '@/components/ui/avatar';
@@ -9,14 +8,7 @@ import { useAuth } from '@/hooks/use-auth';
 export default function AppLayout() {
   const colorScheme = (useColorScheme() ?? 'light') as ColorScheme;
   const colors = getColors(colorScheme);
-  const { user, signOut, isAuthenticated } = useAuth();
-
-  // Reactive navigation - redirect to login when auth state changes
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.replace('/(auth)/login');
-    }
-  }, [isAuthenticated]);
+  const { user, signOut } = useAuth();
 
   const handleSignOut = () => {
     Alert.alert(
@@ -56,6 +48,12 @@ export default function AppLayout() {
               onPress={handleSignOut}
             />
           ),
+        }}
+      />
+      <Stack.Screen
+        name="insights"
+        options={{
+          title: 'Insights',
         }}
       />
     </Stack>

@@ -1,16 +1,20 @@
 import { Redirect } from 'expo-router';
-import { useAuth } from '@/hooks/use-auth';
+import { View, StyleSheet } from 'react-native';
+import { useColors } from '@/hooks/use-colors';
 
 export default function Index() {
-  const { isAuthenticated, hasCompletedOnboarding } = useAuth();
+  const colors = useColors();
 
-  if (!hasCompletedOnboarding) {
-    return <Redirect href="/(auth)/onboarding" />;
-  }
-
-  if (!isAuthenticated) {
-    return <Redirect href="/(auth)/login" />;
-  }
-
-  return <Redirect href="/(app)" />;
+  // Stack.Protected handles auth routing - just redirect to app group
+  return (
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <Redirect href="/(app)" />
+    </View>
+  );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

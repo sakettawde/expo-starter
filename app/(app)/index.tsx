@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
 import Animated, { FadeInUp } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { router } from 'expo-router';
 import { useColors } from '@/hooks/use-colors';
 import { useAuth } from '@/hooks/use-auth';
 
@@ -16,22 +17,25 @@ type CardProps = {
   description: string;
   emoji: string;
   index: number;
+  onPress?: () => void;
 };
 
-function Card({ title, description, emoji, index }: CardProps) {
+function Card({ title, description, emoji, index, onPress }: CardProps) {
   const colors = useColors();
   return (
     <Animated.View
       entering={FadeInUp.delay(200 + index * 50).duration(300)}
     >
       <Pressable
+        onPress={onPress}
+        disabled={!onPress}
         style={({ pressed }) => [
           styles.card,
           {
             backgroundColor: colors.surface,
             borderColor: colors.border,
-            opacity: pressed ? 0.9 : 1,
-            transform: [{ scale: pressed ? 0.98 : 1 }],
+            opacity: pressed && onPress ? 0.9 : 1,
+            transform: [{ scale: pressed && onPress ? 0.98 : 1 }],
           },
         ]}
       >
@@ -56,6 +60,10 @@ export default function DashboardScreen() {
 
   const greeting = getGreeting();
   const userName = user?.name ?? 'there';
+
+  const handleInsightsPress = () => {
+    router.push('/insights');
+  };
 
   const features = [
     {
@@ -121,6 +129,7 @@ export default function DashboardScreen() {
             description={feature.description}
             emoji={feature.emoji}
             index={index}
+            onPress={feature.title === 'Insights' ? handleInsightsPress : undefined}
           />
         ))}
       </View>

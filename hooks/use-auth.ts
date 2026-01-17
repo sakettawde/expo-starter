@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useStorage } from './use-storage';
 
 export type User = {
@@ -20,6 +20,11 @@ const initialAuthState: AuthState = {
 
 export function useAuth() {
   const [authState, setAuthState] = useStorage<AuthState>('auth', initialAuthState);
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    setIsReady(true);
+  }, []);
 
   const signIn = useCallback(
     (email: string, _password: string) => {
@@ -64,6 +69,7 @@ export function useAuth() {
     isAuthenticated: authState.isAuthenticated,
     hasCompletedOnboarding: authState.hasCompletedOnboarding,
     user: authState.user,
+    isReady,
     signIn,
     signOut,
     completeOnboarding,
